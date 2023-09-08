@@ -23,6 +23,10 @@
 		48A861782AA9D03B00929002 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A861772AA9D03B00929002 /* SearchView.swift */; };
 		48A8617B2AAA9F1C00929002 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8617A2AAA9F1C00929002 /* BaseCollectionViewCell.swift */; };
 		48A861822AAAEAC000929002 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A861812AAAEAC000929002 /* SearchCollectionViewCell.swift */; };
+		48A8618A2AAB347900929002 /* ShoppingAPIManager .swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A861892AAB347900929002 /* ShoppingAPIManager .swift */; };
+		48A8618C2AAB35A300929002 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8618B2AAB35A300929002 /* APIKey.swift */; };
+		48A8618E2AAB35DD00929002 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 48A8618D2AAB35DD00929002 /* .gitignore */; };
+		48A861902AAB44D200929002 /* Shopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8618F2AAB44D200929002 /* Shopping.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +44,10 @@
 		48A861772AA9D03B00929002 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		48A8617A2AAA9F1C00929002 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		48A861812AAAEAC000929002 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		48A861892AAB347900929002 /* ShoppingAPIManager .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShoppingAPIManager .swift"; sourceTree = "<group>"; };
+		48A8618B2AAB35A300929002 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		48A8618D2AAB35DD00929002 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		48A8618F2AAB44D200929002 /* Shopping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shopping.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +84,7 @@
 		48A8614A2AA9CCD500929002 /* ShoppingProject */ = {
 			isa = PBXGroup;
 			children = (
+				48A861882AAB330E00929002 /* Network */,
 				48A861792AAA9EFE00929002 /* Cell */,
 				48A861762AA9D02B00929002 /* View */,
 				48A861712AA9CF1500929002 /* Scene */,
@@ -123,6 +132,17 @@
 				48A861812AAAEAC000929002 /* SearchCollectionViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		48A861882AAB330E00929002 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				48A861892AAB347900929002 /* ShoppingAPIManager .swift */,
+				48A8618B2AAB35A300929002 /* APIKey.swift */,
+				48A8618D2AAB35DD00929002 /* .gitignore */,
+				48A8618F2AAB44D200929002 /* Shopping.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48A861582AA9CCD800929002 /* LaunchScreen.storyboard in Resources */,
+				48A8618E2AAB35DD00929002 /* .gitignore in Resources */,
 				48A861552AA9CCD800929002 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,7 +231,10 @@
 				48A861752AA9CF9C00929002 /* ReusableProtocol.swift in Sources */,
 				48A8617B2AAA9F1C00929002 /* BaseCollectionViewCell.swift in Sources */,
 				48A861502AA9CCD500929002 /* ViewController.swift in Sources */,
+				48A8618A2AAB347900929002 /* ShoppingAPIManager .swift in Sources */,
 				48A861822AAAEAC000929002 /* SearchCollectionViewCell.swift in Sources */,
+				48A8618C2AAB35A300929002 /* APIKey.swift in Sources */,
+				48A861902AAB44D200929002 /* Shopping.swift in Sources */,
 				48A8616C2AA9CE1100929002 /* BaseViewController.swift in Sources */,
 				48A861782AA9D03B00929002 /* SearchView.swift in Sources */,
 				48A861702AA9CE3B00929002 /* BaseView.swift in Sources */,

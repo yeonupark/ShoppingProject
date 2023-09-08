@@ -7,6 +7,14 @@
 
 import UIKit
 
+enum SortItem: String {
+    case accuracy = "sim"
+    case lately = "date"
+    case cheap = "dsc"
+    case expensive = "asc"
+    
+}
+
 class SearchView: BaseView {
     
     let searchBar = {

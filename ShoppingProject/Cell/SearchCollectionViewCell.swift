@@ -13,7 +13,8 @@ class SearchCollectionViewCell: BaseCollectionViewCell {
     let imageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 20
-        view.backgroundColor = .systemPink //
+        view.clipsToBounds = true
+        view.backgroundColor = .white
         
         return view
     }()
@@ -65,17 +66,17 @@ class SearchCollectionViewCell: BaseCollectionViewCell {
             make.width.height.equalTo(contentView.snp.width)
         }
         mallName.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(4)
+            make.top.equalTo(imageView.snp.bottom).offset(8)
             make.leading.equalTo(imageView.snp.leading)
             make.height.equalTo(18)
         }
         title.snp.makeConstraints { make in
-            make.top.equalTo(mallName.snp.bottom).offset(1)
+            make.top.equalTo(mallName.snp.bottom).offset(2)
             make.leading.equalTo(imageView.snp.leading)
             make.trailing.equalTo(imageView.snp.trailing)
         }
         price.snp.makeConstraints { make in
-            make.top.equalTo(title.snp.bottom).offset(1)
+            make.top.equalTo(title.snp.bottom).offset(2)
             make.leading.equalTo(imageView.snp.leading)
             make.height.equalTo(18)
         }
