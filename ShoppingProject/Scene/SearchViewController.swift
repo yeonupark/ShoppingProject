@@ -43,7 +43,7 @@ class SearchViewController: BaseViewController {
         
         sortStandard = SortItem.accuracy
         guard let word = mainView.searchBar.text else { return }
-        setCollectionView(word: word)
+        setShoppingList(word: word)
         
     }
     
@@ -53,7 +53,7 @@ class SearchViewController: BaseViewController {
         
         sortStandard = SortItem.lately
         guard let word = mainView.searchBar.text else { return }
-        setCollectionView(word: word)
+        setShoppingList(word: word)
         
     }
     
@@ -63,7 +63,7 @@ class SearchViewController: BaseViewController {
         
         sortStandard = SortItem.cheap
         guard let word = mainView.searchBar.text else { return }
-        setCollectionView(word: word)
+        setShoppingList(word: word)
         
     }
     
@@ -73,7 +73,7 @@ class SearchViewController: BaseViewController {
         
         sortStandard = SortItem.expensive
         guard let word = mainView.searchBar.text else { return }
-        setCollectionView(word: word)
+        setShoppingList(word: word)
         
     }
     
@@ -94,7 +94,7 @@ class SearchViewController: BaseViewController {
         }
     }
     
-    func setCollectionView(word: String) {
+    func setShoppingList(word: String) {
         shoppingList.removeAll()
         
         ShoppingAPIManager.shared.callRequest(word, sort: sortStandard.rawValue) { data in
@@ -103,12 +103,12 @@ class SearchViewController: BaseViewController {
                 title = title.components(separatedBy: "<b>").joined()
                 title = title.components(separatedBy: "</b>").joined()
                 
-                let link = item.link
+                let productID = item.productID
                 let imagePath = item.image
                 let mallName = "[\(item.mallName)]"
                 let price = item.lprice
                 
-                self.shoppingList.append(Item(title: title, link: link, image: imagePath, lprice: price, mallName: mallName))
+                self.shoppingList.append(Item(title: title, image: imagePath, lprice: price, mallName: mallName, productID: productID))
             }
             self.mainView.collectionView.reloadData()
         }
@@ -124,30 +124,16 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         mainView.searchBar.endEditing(true)
-        shoppingList.removeAll()
         
         guard let word = mainView.searchBar.text else { return }
-        ShoppingAPIManager.shared.callRequest(word, sort: sortStandard.rawValue) { data in
-            for item in data.items {
-                var title = item.title
-                title = title.components(separatedBy: "<b>").joined()
-                title = title.components(separatedBy: "</b>").joined()
-                
-                let link = item.link
-                let imagePath = item.image
-                let mallName = "[\(item.mallName)]"
-                let price = item.lprice
-                
-                self.shoppingList.append(Item(title: title, link: link, image: imagePath, lprice: price, mallName: mallName))
-            }
-            self.mainView.collectionView.reloadData()
-        }
+        setShoppingList(word: word)
         
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         mainView.searchBar.endEditing(true)
         mainView.searchBar.text = ""
+        
         shoppingList.removeAll()
         mainView.collectionView.reloadData()
     }
@@ -190,6 +176,14 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let vc = DetailViewController()
+        vc.productId = shoppingList[indexPath.item].productID
+        vc.navigationItem.title = shoppingList[indexPath.item].title
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 }

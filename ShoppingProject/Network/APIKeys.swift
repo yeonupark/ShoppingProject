@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum APIKey {
+enum APIKeys {
     static let naverShoppingID = "usk4rXoU4QldxIb1oqh0"
     static let naverShoppingSecret = "xjoMNddZ0v"
 }

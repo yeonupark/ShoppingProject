@@ -18,8 +18,8 @@ class ShoppingAPIManager {
         
         let url = "https://openapi.naver.com/v1/search/shop.json"
         let header : HTTPHeaders = [
-            "X-Naver-Client-Id": APIKey.naverShoppingID,
-            "X-Naver-Client-Secret": APIKey.naverShoppingSecret
+            "X-Naver-Client-Id": APIKeys.naverShoppingID,
+            "X-Naver-Client-Secret": APIKeys.naverShoppingSecret
         ]
         let parameter : Parameters = ["query" : query, "sort" : sort]
         

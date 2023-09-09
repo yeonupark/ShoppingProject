@@ -18,14 +18,14 @@ struct Shopping: Codable {
 // MARK: - Item
 struct Item: Codable {
     let title: String
-    let link: String
+    //let link: String
     let image: String
     let lprice: String?
-    let mallName: String
+    let mallName, productID: String
     //let lprice, hprice, mallName, productID: String
 
     enum CodingKeys: String, CodingKey {
-        case title, link, image, lprice, mallName
-        //case productID = "productId"
+        case title, image, lprice, mallName
+        case productID = "productId"
     }
 }

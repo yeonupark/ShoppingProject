@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		483C70C12AACD2CE004FDB93 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C70C02AACD2CE004FDB93 /* DetailViewController.swift */; };
 		48A8614C2AA9CCD500929002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8614B2AA9CCD500929002 /* AppDelegate.swift */; };
 		48A8614E2AA9CCD500929002 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8614D2AA9CCD500929002 /* SceneDelegate.swift */; };
 		48A861502AA9CCD500929002 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8614F2AA9CCD500929002 /* ViewController.swift */; };
@@ -24,12 +25,13 @@
 		48A8617B2AAA9F1C00929002 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8617A2AAA9F1C00929002 /* BaseCollectionViewCell.swift */; };
 		48A861822AAAEAC000929002 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A861812AAAEAC000929002 /* SearchCollectionViewCell.swift */; };
 		48A8618A2AAB347900929002 /* ShoppingAPIManager .swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A861892AAB347900929002 /* ShoppingAPIManager .swift */; };
-		48A8618C2AAB35A300929002 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8618B2AAB35A300929002 /* APIKey.swift */; };
+		48A8618C2AAB35A300929002 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8618B2AAB35A300929002 /* APIKeys.swift */; };
 		48A8618E2AAB35DD00929002 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 48A8618D2AAB35DD00929002 /* .gitignore */; };
 		48A861902AAB44D200929002 /* Shopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8618F2AAB44D200929002 /* Shopping.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		483C70C02AACD2CE004FDB93 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		48A861482AA9CCD500929002 /* ShoppingProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A8614B2AA9CCD500929002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48A8614D2AA9CCD500929002 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,7 +47,7 @@
 		48A8617A2AAA9F1C00929002 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		48A861812AAAEAC000929002 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		48A861892AAB347900929002 /* ShoppingAPIManager .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShoppingAPIManager .swift"; sourceTree = "<group>"; };
-		48A8618B2AAB35A300929002 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		48A8618B2AAB35A300929002 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		48A8618D2AAB35DD00929002 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		48A8618F2AAB44D200929002 /* Shopping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shopping.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				48A861722AA9CF4000929002 /* SearchViewController.swift */,
+				483C70C02AACD2CE004FDB93 /* DetailViewController.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -138,7 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				48A861892AAB347900929002 /* ShoppingAPIManager .swift */,
-				48A8618B2AAB35A300929002 /* APIKey.swift */,
+				48A8618B2AAB35A300929002 /* APIKeys.swift */,
 				48A8618D2AAB35DD00929002 /* .gitignore */,
 				48A8618F2AAB44D200929002 /* Shopping.swift */,
 			);
@@ -233,13 +236,14 @@
 				48A861502AA9CCD500929002 /* ViewController.swift in Sources */,
 				48A8618A2AAB347900929002 /* ShoppingAPIManager .swift in Sources */,
 				48A861822AAAEAC000929002 /* SearchCollectionViewCell.swift in Sources */,
-				48A8618C2AAB35A300929002 /* APIKey.swift in Sources */,
+				48A8618C2AAB35A300929002 /* APIKeys.swift in Sources */,
 				48A861902AAB44D200929002 /* Shopping.swift in Sources */,
 				48A8616C2AA9CE1100929002 /* BaseViewController.swift in Sources */,
 				48A861782AA9D03B00929002 /* SearchView.swift in Sources */,
 				48A861702AA9CE3B00929002 /* BaseView.swift in Sources */,
 				48A8614C2AA9CCD500929002 /* AppDelegate.swift in Sources */,
 				48A8614E2AA9CCD500929002 /* SceneDelegate.swift in Sources */,
+				483C70C12AACD2CE004FDB93 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
