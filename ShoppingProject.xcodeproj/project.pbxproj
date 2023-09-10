@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		483C70C12AACD2CE004FDB93 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C70C02AACD2CE004FDB93 /* DetailViewController.swift */; };
+		483C70C32AAD9BF5004FDB93 /* MyShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C70C22AAD9BF5004FDB93 /* MyShoppingListViewController.swift */; };
+		483C70C52AAD9C7F004FDB93 /* MyShoppingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C70C42AAD9C7F004FDB93 /* MyShoppingListView.swift */; };
+		483C70C72AADA21F004FDB93 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C70C62AADA21F004FDB93 /* TabBarController.swift */; };
 		48A8614C2AA9CCD500929002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8614B2AA9CCD500929002 /* AppDelegate.swift */; };
 		48A8614E2AA9CCD500929002 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8614D2AA9CCD500929002 /* SceneDelegate.swift */; };
 		48A861502AA9CCD500929002 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A8614F2AA9CCD500929002 /* ViewController.swift */; };
@@ -32,6 +35,9 @@
 
 /* Begin PBXFileReference section */
 		483C70C02AACD2CE004FDB93 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		483C70C22AAD9BF5004FDB93 /* MyShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShoppingListViewController.swift; sourceTree = "<group>"; };
+		483C70C42AAD9C7F004FDB93 /* MyShoppingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShoppingListView.swift; sourceTree = "<group>"; };
+		483C70C62AADA21F004FDB93 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		48A861482AA9CCD500929002 /* ShoppingProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A8614B2AA9CCD500929002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48A8614D2AA9CCD500929002 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +114,7 @@
 				48A8616F2AA9CE3B00929002 /* BaseView.swift */,
 				48A861742AA9CF9C00929002 /* ReusableProtocol.swift */,
 				48A8617A2AAA9F1C00929002 /* BaseCollectionViewCell.swift */,
+				483C70C62AADA21F004FDB93 /* TabBarController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -117,6 +124,7 @@
 			children = (
 				48A861722AA9CF4000929002 /* SearchViewController.swift */,
 				483C70C02AACD2CE004FDB93 /* DetailViewController.swift */,
+				483C70C22AAD9BF5004FDB93 /* MyShoppingListViewController.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -125,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				48A861772AA9D03B00929002 /* SearchView.swift */,
+				483C70C42AAD9C7F004FDB93 /* MyShoppingListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -236,9 +245,12 @@
 				48A861502AA9CCD500929002 /* ViewController.swift in Sources */,
 				48A8618A2AAB347900929002 /* ShoppingAPIManager .swift in Sources */,
 				48A861822AAAEAC000929002 /* SearchCollectionViewCell.swift in Sources */,
+				483C70C72AADA21F004FDB93 /* TabBarController.swift in Sources */,
 				48A8618C2AAB35A300929002 /* APIKeys.swift in Sources */,
 				48A861902AAB44D200929002 /* Shopping.swift in Sources */,
+				483C70C52AAD9C7F004FDB93 /* MyShoppingListView.swift in Sources */,
 				48A8616C2AA9CE1100929002 /* BaseViewController.swift in Sources */,
+				483C70C32AAD9BF5004FDB93 /* MyShoppingListViewController.swift in Sources */,
 				48A861782AA9D03B00929002 /* SearchView.swift in Sources */,
 				48A861702AA9CE3B00929002 /* BaseView.swift in Sources */,
 				48A8614C2AA9CCD500929002 /* AppDelegate.swift in Sources */,

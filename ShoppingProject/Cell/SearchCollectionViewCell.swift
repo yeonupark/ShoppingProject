@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SearchCollectionViewCell: BaseCollectionViewCell {
+class ProductCollectionViewCell: BaseCollectionViewCell {
     
     let imageView = {
         let view = UIImageView()
@@ -21,8 +21,9 @@ class SearchCollectionViewCell: BaseCollectionViewCell {
     
     let likeButton = {
         let view = UIButton()
-        view.layer.cornerRadius = 30
-        view.imageView?.image = UIImage(systemName: "heart")
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         view.backgroundColor = .white
         view.tintColor = .black
         
@@ -64,6 +65,10 @@ class SearchCollectionViewCell: BaseCollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.width.height.equalTo(contentView.snp.width)
+        }
+        likeButton.snp.makeConstraints { make in
+            make.bottom.trailing.equalTo(imageView).inset(8)
+            make.size.equalTo(40)
         }
         mallName.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(8)
