@@ -9,20 +9,23 @@ import UIKit
 
 class SearchViewController: BaseViewController {
     
-    var shoppingList : [Item] = []
     let mainView = SearchView()
     
     override func loadView() {
         view.self = mainView
     }
     
+    var shoppingList : [Item] = []
     var sortStandard = SortItem.accuracy
+    let repository = ShoppingTableRepository()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "상품 검색"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
+        
+        repository.checkSchemaVersion()
 
         //clickedButtonUIChange(idx: 0)
         mainView.accuracyButton.backgroundColor = .white
@@ -161,6 +164,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         let data = shoppingList[indexPath.item]
         
+        // if db 안에 이 상품이 이미 있다면
+        
+        // else
+        
         cell.mallName.text = data.mallName
         cell.title.text = data.title
         cell.price.text = data.lprice
@@ -174,6 +181,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 cell.imageView.image = UIImage(data: imageData)
             }
         }
+        cell.likeButton.tag = indexPath.item
+        cell.likeButton.addTarget(self, action: #selector(likeButtonClicked(sender: )), for: .touchUpInside)
         
         return cell
     }
@@ -186,6 +195,15 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    @objc func likeButtonClicked(sender: UIButton) {
+        
+        let data = shoppingList[sender.tag]
+        let item = ShoppingTable(productName: data.title, mallName: data.mallName, price: data.lprice!, imageURL: data.image, liked: true, productID: data.productID)
+        repository.addItem(item)
+        sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+
+        
+    }
 }
 
 
