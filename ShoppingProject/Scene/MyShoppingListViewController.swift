@@ -25,6 +25,7 @@ class MyShoppingListViewController: BaseViewController {
         navigationItem.title = "좋아요 목록"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
         
+        mainView.searchBar.delegate = self
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
         
@@ -46,6 +47,7 @@ extension MyShoppingListViewController: UISearchBarDelegate {
         
         guard let word = mainView.searchBar.text else { return }
         tasks = repository.fetchFilter(word)
+        mainView.collectionView.reloadData()
         
     }
     
@@ -58,10 +60,6 @@ extension MyShoppingListViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         
     }
 }
@@ -79,15 +77,12 @@ extension MyShoppingListViewController: UICollectionViewDelegate, UICollectionVi
         cell.mallName.text = data.mallName
         cell.title.text = data.productName
         cell.price.text = data.price
+        cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         
-        guard let url = URL(string: data.imageURL ?? "") else { return cell }
-        
-        DispatchQueue.global().async {
-            let imageData = try! Data(contentsOf: url)
-            
-            DispatchQueue.main.async {
-                cell.imageView.image = UIImage(data: imageData)
-            }
+        if let imageData = data.imageData {
+            cell.imageView.image = UIImage(data: imageData)
+        } else {
+            cell.imageView.image = UIImage(systemName: "nosign")
         }
         
         cell.likeButton.tag = indexPath.item
@@ -98,7 +93,14 @@ extension MyShoppingListViewController: UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailViewController()
-        vc.productId = tasks[indexPath.item].productID
+        
+        if repository.containsProductID(tasks[indexPath.item].productID) {
+            vc.isLiked = true
+        } else {
+            vc.isLiked = false
+        }
+        
+        vc.shoppingTable = tasks[indexPath.item]
         vc.navigationItem.title = tasks[indexPath.item].productName
         navigationController?.pushViewController(vc, animated: true)
     }

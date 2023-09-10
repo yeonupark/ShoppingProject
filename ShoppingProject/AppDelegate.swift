@@ -12,11 +12,15 @@ import RealmSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let config = Realm.Configuration(schemaVersion: 2) { migration, oldSchemaVersion in
+        let config = Realm.Configuration(schemaVersion: 4) { migration, oldSchemaVersion in
             
             if oldSchemaVersion < 1 { } //
             
             if oldSchemaVersion < 2 { } // productID 컬럼 추가
+            
+            if oldSchemaVersion < 3 { } // addedDate 컬럼 추가
+            
+            if oldSchemaVersion < 4 { } // imageURL 삭제, imageData 추가
                 
         }
         

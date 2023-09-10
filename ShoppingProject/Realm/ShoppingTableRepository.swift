@@ -31,15 +31,15 @@ class ShoppingTableRepository: ShoppingTableRepositoryType {
     
     func fetch() -> RealmSwift.Results<ShoppingTable> {
         
-        let data = realm.objects(ShoppingTable.self)
+        let data = realm.objects(ShoppingTable.self).sorted(byKeyPath: "addedDate", ascending: false)
         return data
     }
     
     func fetchFilter(_ keyword: String) -> Results<ShoppingTable> {
         
-        let result = realm.objects(ShoppingTable.self) .where {
+        let result = realm.objects(ShoppingTable.self).where {
             
-            $0.productName.contains("레몬")
+            $0.productName.contains(keyword)
         }
         
         return result
@@ -90,6 +90,7 @@ class ShoppingTableRepository: ShoppingTableRepositoryType {
                     try realm.write {
                         realm.delete(item)
                     }
+                    return
                 }
                 catch {
                     print(error)

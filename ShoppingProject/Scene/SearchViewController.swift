@@ -40,6 +40,10 @@ class SearchViewController: BaseViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     @objc func acurracyButtonClicked() {
         
         clickedButtonUIChange(idx: 0)
@@ -144,10 +148,6 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
     }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        
-    }
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -180,11 +180,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         if repository.containsProductID(data.productID) {
             cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            //cell.likeButton.addTarget(self, action: #selector(likeButtonUnClicked(sender: )), for: .touchUpInside)
-        } //else {
-            cell.likeButton.tag = indexPath.item
-            cell.likeButton.addTarget(self, action: #selector(likeButtonClicked(sender: )), for: .touchUpInside)
-        //}
+        }
+        
+        cell.likeButton.tag = indexPath.item
+        cell.likeButton.addTarget(self, action: #selector(likeButtonClicked(sender: )), for: .touchUpInside)
         
         return cell
     }
@@ -192,7 +191,14 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let vc = DetailViewController()
-        vc.productId = shoppingList[indexPath.item].productID
+        vc.shoppingItem = shoppingList[indexPath.item]
+        
+        if repository.containsProductID(shoppingList[indexPath.item].productID) {
+            vc.isLiked = true
+        } else {
+            vc.isLiked = false
+        }
+        
         vc.navigationItem.title = shoppingList[indexPath.item].title
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -203,8 +209,14 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         if sender.imageView?.image == UIImage(systemName: "heart") {
             
-            let item = ShoppingTable(productName: data.title, mallName: data.mallName, price: data.lprice!, imageURL: data.image, liked: true, productID: data.productID)
-            repository.addItem(item)
+            DispatchQueue.global().async {
+                guard let url = URL(string: data.image) else { return }
+                let imageData = try! Data(contentsOf: url)
+                DispatchQueue.main.async {
+                    let item = ShoppingTable(productName: data.title, addedDate: Date(), mallName: data.mallName, price: data.lprice!, imageData: imageData, liked: true, productID: data.productID)
+                    self.repository.addItem(item)
+                }
+            }
             sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             
         } else {
@@ -212,13 +224,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             repository.deleteItemFromProductID(data.productID)
             sender.setImage(UIImage(systemName: "heart"), for: .normal)
         }
-    }
-    
-    @objc func likeButtonUnClicked(sender: UIButton) {
-        let data = shoppingList[sender.tag]
-        let item = ShoppingTable(productName: data.title, mallName: data.mallName, price: data.lprice!, imageURL: data.image, liked: true, productID: data.productID)
-        repository.deleteItem(item)
-        sender.setImage(UIImage(systemName: "heart"), for: .normal)
     }
 }
 

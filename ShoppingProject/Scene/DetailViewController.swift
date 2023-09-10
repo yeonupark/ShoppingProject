@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import RealmSwift
 
 class DetailViewController: BaseViewController, WKUIDelegate {
     
@@ -19,12 +20,18 @@ class DetailViewController: BaseViewController, WKUIDelegate {
         view = webView
     }
     
-    var productId: String = ""
+    var isLiked: Bool = false
+    var shoppingTable : ShoppingTable! = nil
+    var shoppingItem = Item(title: "", image: "", lprice: "", mallName: "", productID: "")
+    
+    let repository = ShoppingTableRepository()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.tintColor = .white
-        let likeButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: .none)
+        let heart = isLiked ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        let likeButton = UIBarButtonItem(image: heart, style: .plain, target: self, action: #selector(likeButtonClicked(sender: )))
         navigationItem.rightBarButtonItem = likeButton
         
         let appearance = UINavigationBarAppearance()
@@ -34,11 +41,49 @@ class DetailViewController: BaseViewController, WKUIDelegate {
         //navigationController?.navigationBar.standardAppearance = appearance
         //navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
+        showWebSite()
+    }
+    
+    func showWebSite() {
+        let productID = shoppingTable != nil ? shoppingTable.productID : shoppingItem.productID
+        
         DispatchQueue.global().async {
-            guard let myURL = URL(string:"https://msearch.shopping.naver.com/product/"+self.productId) else { return }
+            guard let myURL = URL(string:"https://msearch.shopping.naver.com/product/"+productID) else { return }
             let myRequest = URLRequest(url: myURL)
             DispatchQueue.main.async {
                 self.webView.load(myRequest)
+            }
+        }
+    }
+    
+    @objc func likeButtonClicked(sender: UIBarButtonItem) {
+        
+        if (shoppingTable != nil) { // 좋아요 페이지에서 상세 페이지로 들어간 경우
+            if sender.image == UIImage(systemName: "heart") {
+                self.repository.addItem(shoppingTable)
+                sender.image = UIImage(systemName: "heart.fill")
+            } else {
+                repository.deleteItem(shoppingTable)
+                sender.image = UIImage(systemName: "heart")
+            }
+                
+        } else { // 검색 페이지에서 상세 페이지로 들어간 경우
+            
+            if sender.image == UIImage(systemName: "heart") {
+                
+                DispatchQueue.global().async {
+                    guard let url = URL(string: self.shoppingItem.image) else { return }
+                    let imageData = try! Data(contentsOf: url)
+                    DispatchQueue.main.async {
+                        let item = ShoppingTable(productName: self.shoppingItem.title, addedDate: Date(), mallName: self.shoppingItem.mallName, price: self.shoppingItem.lprice!, imageData: imageData, liked: true, productID: self.shoppingItem.productID)
+                        self.repository.addItem(item)
+                    }
+                }
+                sender.image = UIImage(systemName: "heart.fill")
+                
+            } else {
+                repository.deleteItemFromProductID(self.shoppingItem.productID)
+                sender.image = UIImage(systemName: "heart")
             }
         }
     }
