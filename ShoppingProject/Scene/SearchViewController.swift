@@ -164,10 +164,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         let data = shoppingList[indexPath.item]
         
-        // if db 안에 이 상품이 이미 있다면
-        
-        // else
-        
         cell.mallName.text = data.mallName
         cell.title.text = data.title
         cell.price.text = data.lprice
@@ -181,8 +177,14 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 cell.imageView.image = UIImage(data: imageData)
             }
         }
-        cell.likeButton.tag = indexPath.item
-        cell.likeButton.addTarget(self, action: #selector(likeButtonClicked(sender: )), for: .touchUpInside)
+        
+        if repository.containsProductID(data.productID) {
+            cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            //cell.likeButton.addTarget(self, action: #selector(likeButtonUnClicked(sender: )), for: .touchUpInside)
+        } //else {
+            cell.likeButton.tag = indexPath.item
+            cell.likeButton.addTarget(self, action: #selector(likeButtonClicked(sender: )), for: .touchUpInside)
+        //}
         
         return cell
     }
@@ -198,11 +200,25 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     @objc func likeButtonClicked(sender: UIButton) {
         
         let data = shoppingList[sender.tag]
-        let item = ShoppingTable(productName: data.title, mallName: data.mallName, price: data.lprice!, imageURL: data.image, liked: true, productID: data.productID)
-        repository.addItem(item)
-        sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-
         
+        if sender.imageView?.image == UIImage(systemName: "heart") {
+            
+            let item = ShoppingTable(productName: data.title, mallName: data.mallName, price: data.lprice!, imageURL: data.image, liked: true, productID: data.productID)
+            repository.addItem(item)
+            sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            
+        } else {
+            
+            repository.deleteItemFromProductID(data.productID)
+            sender.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
+    }
+    
+    @objc func likeButtonUnClicked(sender: UIButton) {
+        let data = shoppingList[sender.tag]
+        let item = ShoppingTable(productName: data.title, mallName: data.mallName, price: data.lprice!, imageURL: data.image, liked: true, productID: data.productID)
+        repository.deleteItem(item)
+        sender.setImage(UIImage(systemName: "heart"), for: .normal)
     }
 }
 

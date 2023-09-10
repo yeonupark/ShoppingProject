@@ -69,4 +69,32 @@ class ShoppingTableRepository: ShoppingTableRepositoryType {
         }
     }
     
+    func containsProductID(_ productID: String) -> Bool {
+        
+        let data = realm.objects(ShoppingTable.self)
+        
+        for item in data {
+            if item.productID == productID {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    func deleteItemFromProductID(_ productID: String) {
+        let data = realm.objects(ShoppingTable.self)
+        for item in data {
+            if item.productID == productID {
+                do {
+                    try realm.write {
+                        realm.delete(item)
+                    }
+                }
+                catch {
+                    print(error)
+                }
+            }
+        }
+    }
 }

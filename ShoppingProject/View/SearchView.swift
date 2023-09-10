@@ -12,8 +12,11 @@ enum SortItem: String {
     case lately = "date"
     case cheap = "dsc"
     case expensive = "asc"
-    
 }
+
+//enum Liked {
+//    static var likedProductID: [String] = []
+//}
 
 class SearchView: BaseView {
     

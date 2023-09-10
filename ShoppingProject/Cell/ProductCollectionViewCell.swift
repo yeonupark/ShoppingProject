@@ -56,37 +56,11 @@ class ProductCollectionViewCell: BaseCollectionViewCell {
         return view
     }()
     
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//
-//        likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
-//    @objc func likeButtonClicked() {
-//        print("좋아요버튼눌림")
-//
-//        var heart: String = ""
-//        if likeButton.tag == 0 {
-//            heart = "heart.fill"
-//            likeButton.tag = 1
-//
-//
-//
-//            //repository.addItem(<#T##item: ShoppingTable##ShoppingTable#>)
-//        } else {
-//            heart = "heart"
-//            likeButton.tag = 0
-//            //repository.deleteItem(<#T##item: ShoppingTable##ShoppingTable#>)
-//        }
-//
-//        likeButton.setImage(UIImage(systemName: heart), for: .normal)
-//
-//
-//    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+    }
     
     override func configure() {
         for item in [imageView, likeButton, mallName, title, price] {
