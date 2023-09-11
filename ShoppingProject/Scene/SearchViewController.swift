@@ -17,6 +17,8 @@ class SearchViewController: BaseViewController {
     }
     
     var shoppingList : [Item] = []
+    var startIndex: Int = 1
+    var page: Int = 1
     var sortStandard = SortItem.accuracy
     let repository = ShoppingTableRepository()
     
@@ -48,40 +50,49 @@ class SearchViewController: BaseViewController {
     @objc func acurracyButtonClicked() {
         
         clickedButtonUIChange(idx: 0)
-        
         sortStandard = SortItem.accuracy
+        
         guard let word = mainView.searchBar.text else { return }
         setShoppingList(word: word)
-        
+//        if word != "" {
+//            mainView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+//        }
     }
     
     @objc func latelyButtonClicked() {
         
         clickedButtonUIChange(idx: 1)
-        
         sortStandard = SortItem.lately
+        
         guard let word = mainView.searchBar.text else { return }
         setShoppingList(word: word)
-        
+//        if word != "" {
+//            mainView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+//        }
     }
     
     @objc func cheapestButtonClicked() {
         
         clickedButtonUIChange(idx: 2)
-        
         sortStandard = SortItem.cheap
+        
         guard let word = mainView.searchBar.text else { return }
         setShoppingList(word: word)
-        
+//        if word != "" {
+//            mainView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+//        }
     }
     
     @objc func mostExpensiveButtonClicked() {
         
         clickedButtonUIChange(idx: 3)
-        
         sortStandard = SortItem.expensive
+        
         guard let word = mainView.searchBar.text else { return }
         setShoppingList(word: word)
+//        if word != "" {
+//            mainView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+//        }
         
     }
     
@@ -104,8 +115,7 @@ class SearchViewController: BaseViewController {
     
     func setShoppingList(word: String) {
         shoppingList.removeAll()
-        
-        ShoppingAPIManager.shared.callRequest(word, sort: sortStandard.rawValue) { data in
+        ShoppingAPIManager.shared.callRequest(word, sort: sortStandard.rawValue, start: 1) { data in
             for item in data.items {
                 var title = item.title
                 title = title.components(separatedBy: "<b>").joined()
@@ -125,6 +135,7 @@ class SearchViewController: BaseViewController {
     override func configure() {
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+        mainView.collectionView.prefetchDataSource = self
     }
 }
 
@@ -132,10 +143,11 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         mainView.searchBar.endEditing(true)
+        shoppingList.removeAll()
         
         guard let word = mainView.searchBar.text else { return }
         setShoppingList(word: word)
-        
+        startIndex = 1
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -144,6 +156,7 @@ extension SearchViewController: UISearchBarDelegate {
         
         shoppingList.removeAll()
         mainView.collectionView.reloadData()
+        startIndex = 1
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -151,12 +164,10 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var count = shoppingList.count
-        count = count > 30 ? 30 : count
-        return count
+        return shoppingList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -187,6 +198,34 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.likeButton.addTarget(self, action: #selector(likeButtonClicked(sender: )), for: .touchUpInside)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if shoppingList.count - 1 == indexPath.row && page < 30 {
+        
+                guard let word = mainView.searchBar.text else { return}
+                page += 1
+                startIndex += 30
+                print("page:",page,"startIndex:",startIndex)
+                
+                ShoppingAPIManager.shared.callRequest(word, sort: sortStandard.rawValue, start: startIndex) { data in
+                    for item in data.items {
+                        var title = item.title
+                        title = title.components(separatedBy: "<b>").joined()
+                        title = title.components(separatedBy: "</b>").joined()
+                        
+                        let productID = item.productID
+                        let imagePath = item.image
+                        let mallName = "[\(item.mallName)]"
+                        let price = item.lprice
+                        
+                        self.shoppingList.append(Item(title: title, image: imagePath, lprice: price, mallName: mallName, productID: productID))
+                    }
+                    self.mainView.collectionView.reloadData()
+                }
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
