@@ -46,6 +46,9 @@ class SearchViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        mainView.collectionView.reloadData()
+        mainView.searchBar.endEditing(true)
     }
     
     @objc func acurracyButtonClicked() {
@@ -203,7 +206,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            if shoppingList.count - 1 == indexPath.row && page < 30 {
+            if shoppingList.count - 1 == indexPath.row {
         
                 guard let word = mainView.searchBar.text else { return}
                 page += 1

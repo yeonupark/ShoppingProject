@@ -37,6 +37,7 @@ class MyShoppingListViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         mainView.collectionView.reloadData()
+        mainView.searchBar.endEditing(true)
     }
     
 }
@@ -62,6 +63,9 @@ extension MyShoppingListViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
+        guard let word = mainView.searchBar.text else { return }
+        tasks = repository.fetchFilter(word)
+        mainView.collectionView.reloadData()
     }
 }
 
@@ -104,6 +108,8 @@ extension MyShoppingListViewController: UICollectionViewDelegate, UICollectionVi
         vc.shoppingTable = tasks[indexPath.item]
         vc.navigationItem.title = tasks[indexPath.item].productName
         navigationController?.pushViewController(vc, animated: true)
+        
+        mainView.searchBar.endEditing(true)
     }
     
     @objc func deleteItem(sender: UIButton) {
