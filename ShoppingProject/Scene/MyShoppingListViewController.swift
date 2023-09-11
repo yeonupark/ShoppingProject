@@ -23,6 +23,7 @@ class MyShoppingListViewController: BaseViewController {
         super.viewDidLoad()
         
         navigationItem.title = "좋아요 목록"
+        navigationItem.backButtonTitle = "좋아요 목록"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
         
         mainView.searchBar.delegate = self

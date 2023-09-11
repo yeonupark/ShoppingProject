@@ -18,6 +18,7 @@ class TabBarController: UITabBarController {
     
     func setTabBar() {
         tabBar.barTintColor = .black
+        tabBar.tintColor = .white
         tabBar.isTranslucent = false
         
         let searchTab = UINavigationController(rootViewController: SearchViewController())

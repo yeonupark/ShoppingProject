@@ -28,6 +28,9 @@ class SearchView: BaseView {
         view.backgroundColor = .darkGray
         view.searchTextField.textColor = .white
         
+        if let cancelButton = view.value(forKey: "cancelButton") as? UIButton {
+            cancelButton.setTitleColor(.white, for: .normal)
+        }
         
         return view
     }()

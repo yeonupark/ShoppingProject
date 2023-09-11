@@ -25,15 +25,14 @@ class DetailViewController: BaseViewController, WKUIDelegate {
     var shoppingItem = Item(title: "", image: "", lprice: "", mallName: "", productID: "")
     
     let repository = ShoppingTableRepository()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.tintColor = .white
+        
         let heart = isLiked ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
         let likeButton = UIBarButtonItem(image: heart, style: .plain, target: self, action: #selector(likeButtonClicked(sender: )))
         navigationItem.rightBarButtonItem = likeButton
-        
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .black
         

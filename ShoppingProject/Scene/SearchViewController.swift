@@ -26,6 +26,7 @@ class SearchViewController: BaseViewController {
         super.viewDidLoad()
         
         navigationItem.title = "상품 검색"
+        navigationItem.backButtonTitle = "상품 검색"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
         
         repository.checkSchemaVersion()
