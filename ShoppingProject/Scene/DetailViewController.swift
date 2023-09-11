@@ -77,12 +77,14 @@ class DetailViewController: BaseViewController, WKUIDelegate {
                     DispatchQueue.main.async {
                         let item = ShoppingTable(productName: self.shoppingItem.title, addedDate: Date(), mallName: self.shoppingItem.mallName, price: self.shoppingItem.lprice!, imageData: imageData, liked: true, productID: self.shoppingItem.productID)
                         self.repository.addItem(item)
+                        self.view.makeToast("좋아요 목록에 추가되었습니다!")
                     }
                 }
                 sender.image = UIImage(systemName: "heart.fill")
                 
             } else {
                 repository.deleteItemFromProductID(self.shoppingItem.productID)
+                self.view.makeToast("좋아요 목록에서 삭제되었습니다.")
                 sender.image = UIImage(systemName: "heart")
             }
         }

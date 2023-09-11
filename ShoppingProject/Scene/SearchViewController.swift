@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast
 
 class SearchViewController: BaseViewController {
     
@@ -215,6 +216,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 DispatchQueue.main.async {
                     let item = ShoppingTable(productName: data.title, addedDate: Date(), mallName: data.mallName, price: data.lprice!, imageData: imageData, liked: true, productID: data.productID)
                     self.repository.addItem(item)
+                    self.mainView.makeToast("좋아요 목록에 추가되었습니다!")
                 }
             }
             sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
@@ -222,6 +224,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         } else {
             
             repository.deleteItemFromProductID(data.productID)
+            self.mainView.makeToast("좋아요 목록에서 삭제되었습니다.")
             sender.setImage(UIImage(systemName: "heart"), for: .normal)
         }
     }

@@ -39,7 +39,7 @@ class ShoppingTableRepository: ShoppingTableRepositoryType {
         
         let result = realm.objects(ShoppingTable.self).where {
             
-            $0.productName.contains(keyword)
+            $0.productName.contains(keyword, options: .caseInsensitive)
         }
         
         return result
