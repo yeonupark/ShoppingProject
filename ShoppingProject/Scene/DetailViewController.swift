@@ -23,6 +23,8 @@ class DetailViewController: BaseViewController, WKUIDelegate {
     var isLiked: Bool = false
     var shoppingTable : ShoppingTable! = nil
     var shoppingItem = Item(title: "", image: "", lprice: "", mallName: "", productID: "")
+    var tempTable : ShoppingTable! = nil
+    var tempProductID: String = ""
     
     let repository = ShoppingTableRepository()
     override func viewDidLoad() {
@@ -39,6 +41,11 @@ class DetailViewController: BaseViewController, WKUIDelegate {
         navigationController?.navigationBar.isTranslucent = false
         //navigationController?.navigationBar.standardAppearance = appearance
         //navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        if (shoppingTable != nil) {
+            tempTable = ShoppingTable(productName: shoppingTable.productName, addedDate: shoppingTable.addedDate, mallName: shoppingTable.mallName, price: shoppingTable.price, imageData: shoppingTable.imageData, liked: shoppingTable.liked, productID: shoppingTable.productID)
+            tempProductID = shoppingTable.productID
+        }
         
         showWebSite()
     }
@@ -57,13 +64,21 @@ class DetailViewController: BaseViewController, WKUIDelegate {
     
     @objc func likeButtonClicked(sender: UIBarButtonItem) {
         
+        
         if (shoppingTable != nil) { // 좋아요 페이지에서 상세 페이지로 들어간 경우
             if sender.image == UIImage(systemName: "heart") {
-                self.repository.addItem(shoppingTable)
-                sender.image = UIImage(systemName: "heart.fill")
+                if !tempTable.isInvalidated {
+                    self.repository.addItem(tempTable!)
+                    sender.image = UIImage(systemName: "heart.fill")
+                    self.view.makeToast("좋아요 목록에 추가되었습니다!")
+                } else {
+                    self.view.makeToast("데이터를 불러올 수 없습니다. 검색화면에서 다시 시도해주세요")
+                }
             } else {
-                repository.deleteItem(shoppingTable)
+                repository.deleteItemFromProductID(tempProductID)
                 sender.image = UIImage(systemName: "heart")
+                self.view.makeToast("좋아요 목록에서 삭제되었습니다.")
+                print(tempTable!)
             }
                 
         } else { // 검색 페이지에서 상세 페이지로 들어간 경우
