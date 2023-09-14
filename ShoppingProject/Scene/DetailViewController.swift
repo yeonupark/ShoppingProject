@@ -45,16 +45,19 @@ class DetailViewController: BaseViewController, WKUIDelegate {
         if (shoppingTable != nil) {
             tempTable = ShoppingTable(productName: shoppingTable.productName, addedDate: shoppingTable.addedDate, mallName: shoppingTable.mallName, price: shoppingTable.price, imageData: shoppingTable.imageData, liked: shoppingTable.liked, productID: shoppingTable.productID)
             tempProductID = shoppingTable.productID
+        } else {
+            tempProductID = shoppingItem.productID
         }
         
         showWebSite()
+        
     }
     
     func showWebSite() {
         let productID = shoppingTable != nil ? shoppingTable.productID : shoppingItem.productID
-        
+       
         DispatchQueue.global().async {
-            guard let myURL = URL(string:"https://msearch.shopping.naver.com/product/"+productID) else { return }
+            guard let myURL = URL(string: "https://msearch.shopping.naver.com/product/"+productID) else { return }
             let myRequest = URLRequest(url: myURL)
             DispatchQueue.main.async {
                 self.webView.load(myRequest)
@@ -68,6 +71,12 @@ class DetailViewController: BaseViewController, WKUIDelegate {
         if (shoppingTable != nil) { // 좋아요 페이지에서 상세 페이지로 들어간 경우
             if sender.image == UIImage(systemName: "heart") {
                 if !tempTable.isInvalidated {
+                    
+                    if repository.containsProductID(tempProductID) {
+                        sender.image = UIImage(systemName: "heart.fill")
+                        return
+                    }
+                    
                     self.repository.addItem(tempTable!)
                     sender.image = UIImage(systemName: "heart.fill")
                     self.view.makeToast("좋아요 목록에 추가되었습니다!")
@@ -78,12 +87,16 @@ class DetailViewController: BaseViewController, WKUIDelegate {
                 repository.deleteItemFromProductID(tempProductID)
                 sender.image = UIImage(systemName: "heart")
                 self.view.makeToast("좋아요 목록에서 삭제되었습니다.")
-                print(tempTable!)
             }
                 
         } else { // 검색 페이지에서 상세 페이지로 들어간 경우
             
             if sender.image == UIImage(systemName: "heart") {
+                
+                if repository.containsProductID(tempProductID) {
+                    sender.image = UIImage(systemName: "heart.fill")
+                    return
+                }
                 
                 DispatchQueue.global().async {
                     guard let url = URL(string: self.shoppingItem.image) else { return }
