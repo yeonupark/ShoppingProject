@@ -39,8 +39,8 @@ class DetailViewController: BaseViewController, WKUIDelegate, WKNavigationDelega
         appearance.backgroundColor = .black
         
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        //navigationController?.navigationBar.standardAppearance = appearance
+        //navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
         if (shoppingTable != nil) {
             tempTable = ShoppingTable(productName: shoppingTable.productName, addedDate: shoppingTable.addedDate, mallName: shoppingTable.mallName, price: shoppingTable.price, imageData: shoppingTable.imageData, liked: shoppingTable.liked, productID: shoppingTable.productID)
