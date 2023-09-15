@@ -14,7 +14,7 @@ class ShoppingAPIManager {
     
     private init() {}
     
-    func callRequest(_ query: String, sort: String, start: Int, completionHandler: @escaping (Shopping) -> Void) {
+    func callRequest(_ query: String, sort: String, start: Int, completionHandler: @escaping (Shopping?) -> Void) {
         
         let url = "https://openapi.naver.com/v1/search/shop.json"
         let header : HTTPHeaders = [
@@ -26,7 +26,7 @@ class ShoppingAPIManager {
         AF.request(url, method: .get, parameters: parameter, headers: header).validate()
             .responseDecodable(of: Shopping.self) { response in
                 guard let value = response.value else {
-                    print(response)
+                    completionHandler(nil)
                     return
                 }
                 completionHandler(value)

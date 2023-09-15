@@ -123,9 +123,22 @@ class SearchViewController: BaseViewController {
             return numberFormat.string(for: number)!
         }
     
+    func showAlert(_ title: String) {
+        let alert = UIAlertController(title: title, message: "네트워크 연결상태를 확인 후 다시 시도해주세요.", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(ok)
+        present(alert,animated: true)
+    }
+    
     func setShoppingList(word: String) {
         shoppingList.removeAll()
         ShoppingAPIManager.shared.callRequest(word, sort: sortStandard.rawValue, start: 1) { data in
+            
+            guard let data = data else {
+                self.showAlert("데이터를 불러올 수 없습니다.")
+                return
+            }
+            
             for item in data.items {
                 var title = item.title
                 title = title.components(separatedBy: "<b>").joined()
@@ -222,6 +235,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 print("page:",page,"startIndex:",startIndex)
                 
                 ShoppingAPIManager.shared.callRequest(word, sort: sortStandard.rawValue, start: startIndex) { data in
+                    
+                    guard let data = data else {
+                        self.showAlert("데이터를 불러올 수 없습니다.")
+                        return
+                    }
+                    
                     for item in data.items {
                         var title = item.title
                         title = title.components(separatedBy: "<b>").joined()

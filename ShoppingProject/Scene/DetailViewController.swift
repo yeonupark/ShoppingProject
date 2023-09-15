@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 import RealmSwift
 
-class DetailViewController: BaseViewController, WKUIDelegate {
+class DetailViewController: BaseViewController, WKUIDelegate, WKNavigationDelegate {
     
     var webView: WKWebView!
     
@@ -49,6 +49,7 @@ class DetailViewController: BaseViewController, WKUIDelegate {
             tempProductID = shoppingItem.productID
         }
         
+        webView.navigationDelegate = self
         showWebSite()
         
     }
@@ -63,6 +64,23 @@ class DetailViewController: BaseViewController, WKUIDelegate {
                 self.webView.load(myRequest)
             }
         }
+    }
+    
+    func showAlert(_ title: String) {
+        let alert = UIAlertController(title: title, message: "네트워크 연결상태를 확인 후 다시 시도해주세요.", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(ok)
+        present(alert,animated: true)
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        if let error = error as NSError? {
+                if error.code == NSURLErrorNotConnectedToInternet {
+                    showAlert("네트워크에 연결할 수 없습니다.")
+                } else {
+                    showAlert("오류가 발생했습니다.")
+                }
+            }
     }
     
     @objc func likeButtonClicked(sender: UIBarButtonItem) {
