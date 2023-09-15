@@ -117,6 +117,12 @@ class SearchViewController: BaseViewController {
         }
     }
     
+    func format(for number: Int) -> String {
+            let numberFormat = NumberFormatter()
+            numberFormat.numberStyle = .decimal
+            return numberFormat.string(for: number)!
+        }
+    
     func setShoppingList(word: String) {
         shoppingList.removeAll()
         ShoppingAPIManager.shared.callRequest(word, sort: sortStandard.rawValue, start: 1) { data in
@@ -182,7 +188,9 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         cell.mallName.text = data.mallName
         cell.title.text = data.title
-        cell.price.text = data.lprice
+        if let price = Int(data.lprice) {
+            cell.price.text = format(for: price)+"원"
+        }
         
         guard let url = URL(string: data.image) else { return cell }
         
@@ -257,7 +265,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 guard let url = URL(string: data.image) else { return }
                 let imageData = try! Data(contentsOf: url)
                 DispatchQueue.main.async {
-                    let item = ShoppingTable(productName: data.title, addedDate: Date(), mallName: data.mallName, price: data.lprice!, imageData: imageData, liked: true, productID: data.productID)
+                
+                    let item = ShoppingTable(productName: data.title, addedDate: Date(), mallName: data.mallName, price: data.lprice, imageData: imageData, liked: true, productID: data.productID)
                     self.repository.addItem(item)
                     self.mainView.makeToast("좋아요 목록에 추가되었습니다!")
                 }

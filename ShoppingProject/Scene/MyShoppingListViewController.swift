@@ -67,6 +67,12 @@ extension MyShoppingListViewController: UISearchBarDelegate {
         tasks = repository.fetchFilter(word)
         mainView.collectionView.reloadData()
     }
+    
+    func format(for number: Int) -> String {
+            let numberFormat = NumberFormatter()
+            numberFormat.numberStyle = .decimal
+            return numberFormat.string(for: number)!
+        }
 }
 
 
@@ -81,7 +87,11 @@ extension MyShoppingListViewController: UICollectionViewDelegate, UICollectionVi
         let data = tasks[indexPath.item]
         cell.mallName.text = data.mallName
         cell.title.text = data.productName
-        cell.price.text = data.price
+        
+        if let price = Int(data.price) {
+            cell.price.text = format(for: price)+"원"
+        }
+        
         cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         
         if let imageData = data.imageData {

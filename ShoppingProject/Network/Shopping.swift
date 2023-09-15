@@ -20,7 +20,7 @@ struct Item: Codable {
     let title: String
     //let link: String
     let image: String
-    let lprice: String?
+    let lprice: String
     let mallName, productID: String
     //let lprice, hprice, mallName, productID: String
 

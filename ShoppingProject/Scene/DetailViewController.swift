@@ -39,8 +39,8 @@ class DetailViewController: BaseViewController, WKUIDelegate {
         appearance.backgroundColor = .black
         
         navigationController?.navigationBar.isTranslucent = false
-        //navigationController?.navigationBar.standardAppearance = appearance
-        //navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
         if (shoppingTable != nil) {
             tempTable = ShoppingTable(productName: shoppingTable.productName, addedDate: shoppingTable.addedDate, mallName: shoppingTable.mallName, price: shoppingTable.price, imageData: shoppingTable.imageData, liked: shoppingTable.liked, productID: shoppingTable.productID)
@@ -66,7 +66,6 @@ class DetailViewController: BaseViewController, WKUIDelegate {
     }
     
     @objc func likeButtonClicked(sender: UIBarButtonItem) {
-        
         
         if (shoppingTable != nil) { // 좋아요 페이지에서 상세 페이지로 들어간 경우
             if sender.image == UIImage(systemName: "heart") {
@@ -102,7 +101,7 @@ class DetailViewController: BaseViewController, WKUIDelegate {
                     guard let url = URL(string: self.shoppingItem.image) else { return }
                     let imageData = try! Data(contentsOf: url)
                     DispatchQueue.main.async {
-                        let item = ShoppingTable(productName: self.shoppingItem.title, addedDate: Date(), mallName: self.shoppingItem.mallName, price: self.shoppingItem.lprice!, imageData: imageData, liked: true, productID: self.shoppingItem.productID)
+                        let item = ShoppingTable(productName: self.shoppingItem.title, addedDate: Date(), mallName: self.shoppingItem.mallName, price: self.shoppingItem.lprice, imageData: imageData, liked: true, productID: self.shoppingItem.productID)
                         self.repository.addItem(item)
                         self.view.makeToast("좋아요 목록에 추가되었습니다!")
                     }
